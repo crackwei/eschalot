@@ -69,6 +69,7 @@
 #include <openssl/sha.h>
 #define OPENSSL_VERSION_1_1 0x10100000L
 #define OPENSSL_VERSION_0_9_0_8 0x0090800FL
+#define NEED_HTOBE32           //新增
 
 /* Define NEED_HTOBE32 if htobe32() is not available on your platform. */
 /* #define NEED_HTOBE32 */
@@ -111,7 +112,7 @@ strnlen(const char *s, size_t ml)
 #define MAX_WORDS	0xFFFFFFFFu		/* Maximum words to read from file */
 #define BASE32_ALPHABET	"abcdefghijklmnopqrstuvwxyz234567"
 
-extern char	*__progname;
+char __progname[100];
 
 /* Error and debug functions */
 static void		usage(void);
@@ -160,6 +161,7 @@ main(int argc, char *argv[])
 	unsigned int	i, j, dupcount = 0;
 
 	pthread_mutex_init(&printresult_lock, NULL);
+	strcpy(__progname, argv[0]);
 
 	/* Initialize global flags */
 	wordcount = done = cflag = fflag = nflag = pflag = rflag = vflag = 0;
